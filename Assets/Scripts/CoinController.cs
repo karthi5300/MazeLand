@@ -4,9 +4,7 @@ using UnityEngine;
 public class CoinController : MonoBehaviour
 {
     //var to set the coin rotation spedd in Inspector
-    [SerializeField]
-    //1.0f rotattions/sec
-    private float rotateSpeed = 1f;
+    [SerializeField] private float rotateSpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,4 +27,5 @@ public class CoinController : MonoBehaviour
             yield return 0;
         }
     }
+
 }

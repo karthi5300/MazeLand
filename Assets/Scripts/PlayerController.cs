@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float m_rollSpeed = 3f;
+    [SerializeField] private float m_rollSpeed = 3f;
+    [SerializeField] AudioClip m_playerMoveClip;
+    [SerializeField] AudioClip m_coinCollectClip;
 
     private bool m_isMoving;
+    private int m_playerMoveCount = 10;
+
     public System.Action OnPlayerMove;
     public System.Action OnPlayerCollectCoin;
     public System.Action OnPlayerCompleteLevel;
+    public System.Action OnPlayerRunOutOfMoves;
 
     // Update is called once per frame
     void Update()
@@ -30,6 +34,10 @@ public class PlayerController : MonoBehaviour
 
             if (OnPlayerMove != null)
                 OnPlayerMove();
+
+            if (--m_playerMoveCount == 0)
+                if (OnPlayerRunOutOfMoves != null)
+                    OnPlayerRunOutOfMoves();
         }
     }
 
@@ -52,6 +60,7 @@ public class PlayerController : MonoBehaviour
             if (OnPlayerCollectCoin != null)
                 OnPlayerCollectCoin();
 
+            AudioManager.Instance.Play(m_coinCollectClip);
             Destroy(collider.gameObject);
         }
 

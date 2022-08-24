@@ -4,13 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI m_playerMovesLeft;
-    [SerializeField] TextMeshProUGUI m_currentCoins;
-    [SerializeField] TextMeshProUGUI m_finalCoins;
-    [SerializeField] TextMeshProUGUI m_currentScore;
-    [SerializeField] TextMeshProUGUI m_finalScore;
-    [SerializeField] GameObject m_gameOverScreen;
-    [SerializeField] GameObject m_levelOverScreen;
+    [SerializeField] private TextMeshProUGUI m_playerMovesLeft;
+    [SerializeField] private TextMeshProUGUI m_currentCoins;
+    [SerializeField] private TextMeshProUGUI m_finalCoins;
+    [SerializeField] private TextMeshProUGUI m_currentScore;
+    [SerializeField] private TextMeshProUGUI m_finalScore;
+    [SerializeField] private GameObject m_gameOverScreen;
+    [SerializeField] private GameObject m_levelOverScreen;
+    [SerializeField] AudioClip m_levelWinClip;
+    [SerializeField] AudioClip m_levelLostClip;
 
     int m_moveCount = 10;
     int m_coinCount = 0;
@@ -36,19 +38,19 @@ public class UIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (m_noMovesLeft) DisplayGameOver();
+        if (m_isLevelOver)
+            DisplayLevelOver();
 
-        if (m_isLevelOver) DisplayLevelOver();
+        if (m_noMovesLeft)
+            DisplayGameOver();
 
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (m_isGameOver)
+        if (m_isGameOver)
+            if (Input.GetKeyDown(KeyCode.Space))
                 SceneManager.LoadScene(m_currentScene);
 
-            if (m_isLevelOver)
+        if (m_isLevelOver)
+            if (Input.GetKeyDown(KeyCode.Space))
                 SceneManager.LoadScene(++m_currentScene);
-        }
     }
 
     //since we subscribed DecreaseMoveCount method to OnPlayerMove event,
@@ -83,7 +85,10 @@ public class UIHandler : MonoBehaviour
 
     void DisplayGameOver()
     {
+        //displaying you lost screen
         m_gameOverScreen.SetActive(true);
+
+        //updating UI
         DisplayFinalCoinScore();
         m_finalCoins.text = m_currentCoins.text;
         m_finalScore.text = m_currentScore.text;
@@ -92,7 +97,10 @@ public class UIHandler : MonoBehaviour
 
     void DisplayLevelOver()
     {
+        //displaying you win screen
         m_levelOverScreen.SetActive(true);
+
+        //updating UI
         DisplayFinalCoinScore();
         m_finalCoins.text = m_currentCoins.text;
         m_finalScore.text = m_currentScore.text;
