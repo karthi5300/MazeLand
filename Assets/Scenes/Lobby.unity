@@ -373,8 +373,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e967d28e4a5a924bb330a17c126b7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovesLeft: {fileID: 0}
-  _gameOverScreen: {fileID: 0}
+  m_playerMovesLeft: {fileID: 0}
+  m_currentCoins: {fileID: 0}
+  m_finalCoins: {fileID: 0}
+  m_currentScore: {fileID: 0}
+  m_finalScore: {fileID: 0}
+  m_gameOverScreen: {fileID: 0}
+  m_levelOverScreen: {fileID: 0}
 --- !u!1 &676997486
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,7 +912,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.21960784, g: 0.23137255, b: 0.24705882, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
