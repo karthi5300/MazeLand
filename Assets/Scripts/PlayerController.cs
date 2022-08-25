@@ -25,16 +25,39 @@ public class PlayerController : MonoBehaviour
         if (m_isMoving)
             return;
 
-        if (m_moveLeft) { if (Input.GetKeyDown(KeyCode.A)) Assemble(Vector3.left); }
+        if (m_moveLeft)
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Assemble(Vector3.left);
+                //resetting the raycast direction despite the player's rotation
+                transform.rotation = Quaternion.identity;
+            }
 
-        if (m_moveRight) { if (Input.GetKeyDown(KeyCode.D)) Assemble(Vector3.right); }
+        if (m_moveRight)
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                Assemble(Vector3.right);
+                //resetting the raycast direction despite the player's rotation
+                transform.rotation = Quaternion.identity;
+            }
 
-        if (m_moveForward) { if (Input.GetKeyDown(KeyCode.W)) Assemble(Vector3.forward); }
+        if (m_moveForward)
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                Assemble(Vector3.forward);
+                //resetting the raycast direction despite the player's rotation
+                transform.rotation = Quaternion.identity;
+            }
 
-        if (m_moveBack) { if (Input.GetKeyDown(KeyCode.S)) Assemble(Vector3.back); }
+        if (m_moveBack)
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Assemble(Vector3.back);
+                //resetting the raycast direction despite the player's rotation
+                transform.rotation = Quaternion.identity;
+            }
 
-        transform.rotation = Quaternion.identity;
-
+        //transform.rotation = Quaternion.identity;
         CheckBorder();
     }
 
@@ -55,12 +78,16 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Roll(Vector3 anchor, Vector3 axis)
     {
+        //play player move sound, as soon as player moves
+        AudioManager.Instance.Play(m_playerMoveClip);
+
         m_isMoving = true;
         for (int i = 0; i < (90 / m_rollSpeed); i++)
         {
             transform.RotateAround(anchor, axis, m_rollSpeed);
             yield return new WaitForSeconds(0.01f);
         }
+
         m_isMoving = false;
     }
 
