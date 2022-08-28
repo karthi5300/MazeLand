@@ -14,7 +14,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] AudioClip m_levelWinClip;
     [SerializeField] AudioClip m_levelLostClip;
 
-    int m_moveCount = 10;
+    int m_moveCount = 25;
     int m_coinCount = 0;
     int m_score;
     int m_currentScene;

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip m_coinCollectClip;
 
     private bool m_isMoving;
-    private int m_playerMoveCount = 10;
+    private int m_playerMoveCount = 25;
     private bool m_moveLeft;
     private bool m_moveRight;
     private bool m_moveForward;
@@ -124,37 +125,79 @@ public class PlayerController : MonoBehaviour
         RaycastHit hitInfo;
 
         //Raycast function to check for the ray being hit
-        if (Physics.Raycast(leftRay, out hitInfo, 1))
+        if (Physics.Raycast(leftRay, out hitInfo, 1f))
         {
-            if (hitInfo.collider.gameObject.CompareTag("Wall"))
+            Debug.DrawLine(leftRay.origin, leftRay.origin + leftRay.direction * 1, Color.red);
+
+            if (hitInfo.collider.gameObject.CompareTag("Wall"))     //when wall detected, don't allow player to move
                 m_moveLeft = false;
+            else
+                m_moveLeft = true;
+
+            /*            
+            if (hitInfo.collider.gameObject.CompareTag("Ladder"))   //when ladder detected, allow player to move
+                            m_moveLeft = true;*/
         }
         else
-            m_moveLeft = true;
-
-        if (Physics.Raycast(rightRay, out hitInfo, 1))
         {
-            if (hitInfo.collider.gameObject.CompareTag("Wall"))
+            m_moveLeft = true;                                      //when no obstacle detected, allow player to move
+            Debug.DrawLine(leftRay.origin, leftRay.origin + leftRay.direction * 1, Color.green);
+        }
+
+        if (Physics.Raycast(rightRay, out hitInfo, 1f))
+        {
+            Debug.DrawLine(rightRay.origin, rightRay.origin + rightRay.direction * 1, Color.red);
+
+            if (hitInfo.collider.gameObject.CompareTag("Wall"))     //when wall detected, don't allow player to move
                 m_moveRight = false;
+            else
+                m_moveRight = true;
+
+            /*
+            if (hitInfo.collider.gameObject.CompareTag("Ladder"))   //when ladder detected, allow player to move
+                            m_moveRight = true;*/
         }
         else
-            m_moveRight = true;
-
-        if (Physics.Raycast(forwardRay, out hitInfo, 1))
         {
-            if (hitInfo.collider.gameObject.CompareTag("Wall"))
+            m_moveRight = true;                                     //when no obstacle detected, allow player to move
+            Debug.DrawLine(rightRay.origin, rightRay.origin + rightRay.direction * 1, Color.green);
+        }
+        if (Physics.Raycast(forwardRay, out hitInfo, 1f))
+        {
+            Debug.DrawLine(forwardRay.origin, forwardRay.origin + forwardRay.direction * 1, Color.red);
+
+            if (hitInfo.collider.gameObject.CompareTag("Wall"))     //when wall detected, don't allow player to move
                 m_moveForward = false;
+            else
+                m_moveForward = true;
+
+            /*
+            if (hitInfo.collider.gameObject.CompareTag("Ladder"))   //when ladder detected, allow player to move
+                m_moveForward = true;*/
         }
         else
-            m_moveForward = true;
-
-        if (Physics.Raycast(backRay, out hitInfo, 1))
         {
-            if (hitInfo.collider.gameObject.CompareTag("Wall"))
+            m_moveForward = true;                                     //when no obstacle detected, allow player to move
+            Debug.DrawLine(forwardRay.origin, forwardRay.origin + forwardRay.direction * 1, Color.green);
+        }
+
+        if (Physics.Raycast(backRay, out hitInfo, 1f))
+        {
+            Debug.DrawLine(backRay.origin, backRay.origin + backRay.direction * 1, Color.red);
+
+            if (hitInfo.collider.gameObject.CompareTag("Wall"))     //when wall detected, don't allow player to move
                 m_moveBack = false;
+            else
+                m_moveBack= true;
+
+            /*            
+            if (hitInfo.collider.gameObject.CompareTag("Ladder"))   //when ladder detected, allow player to move
+                            m_moveBack = true;*/
         }
         else
-            m_moveBack = true;
-
+        {
+            m_moveBack = true;                                     //when no obstacle detected, allow player to move
+            Debug.DrawLine(backRay.origin, backRay.origin + backRay.direction * 1, Color.green);
+        }
     }
 }
