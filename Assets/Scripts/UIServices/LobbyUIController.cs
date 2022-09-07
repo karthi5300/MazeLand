@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GlobalServices;
 
-public class LobbyController : MonoBehaviour
+public class LobbyUIController : MonoBehaviour
 {
     [SerializeField] private AudioClip m_lobbyMusicClip;
     [SerializeField] private AudioClip m_gameMusicClip;
@@ -16,7 +17,7 @@ public class LobbyController : MonoBehaviour
 
     public void OnClickPlayButton()
     {
-        
+
         SceneManager.LoadScene(m_firstSceneBuildIndex);
         //playing lobby music
         AudioManager.Instance.PlayMusic(m_gameMusicClip);
